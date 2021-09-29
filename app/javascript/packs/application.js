@@ -10,7 +10,7 @@ import "bootstrap";
 // Internal imports
 import { initCookieBanner } from '../components/cookies'
 import { initMapbox } from '../plugins/init_mapbox';
-import "controllers"
+// import "controllers" TODO  waiting for debug
 
 document.addEventListener('turbolinks:load', () => {
   initCookieBanner();
