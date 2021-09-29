@@ -11,11 +11,11 @@
                 input_html: { autocomplete: "email" } %>
   </div>
 
-  <div class="form-actions">
+  <div class="form-actions my-3 d-flex justify-content-evenly">
     <%= f.button :submit, "Send me reset password instructions" %>
+    <%= render "devise/shared/links" %>
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
 <% end %>
 <%= render "devise/shared/form"%>

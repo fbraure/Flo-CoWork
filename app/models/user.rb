@@ -3,4 +3,15 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  MIN_BIOGRAPHY_LENGTH = 20
+  MAX_BIOGRAPHY_LENGTH = 5000
+
+  has_many :requests
+
+  accepts_nested_attributes_for :requests, allow_destroy: true
+
+  validates :name, presence: true
+  validates :phone, format: { with: /\A\d{10}\z/, message: "10 chiffres sans espace" }
+  validates :biography,  length: { minimum: MIN_BIOGRAPHY_LENGTH , maximum: MAX_BIOGRAPHY_LENGTH }
 end

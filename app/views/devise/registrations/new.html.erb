@@ -1,5 +1,5 @@
 <% content_for(:form) do %>
-<h2>Sign up</h2>
+<h2>CREATION DE COMPTE</h2>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= f.error_notification %>
@@ -11,18 +11,25 @@
                 input_html: { autocomplete: "email" }%>
     <%= f.input :password,
                 required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                hint: ("#{@minimum_password_length} caractères minimum" if @minimum_password_length),
                 input_html: { autocomplete: "new-password" } %>
     <%= f.input :password_confirmation,
                 required: true,
                 input_html: { autocomplete: "new-password" } %>
+    <%= f.input :name,
+                required: true %>
+    <%= f.input :phone,
+                required: true %>
+    <%= f.input :biography,
+                hint: ("De #{User::MIN_BIOGRAPHY_LENGTH} à #{User::MAX_BIOGRAPHY_LENGTH} caractères"),
+                required: true %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
+  <div class="form-actions my-3 d-flex justify-content-evenly">
+    <%= f.button :submit, "Créer un compte", class: "btn btn-primary" %>
+    <%= render "devise/shared/links" %>
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
 <% end %>
 <%= render "devise/shared/form"%>

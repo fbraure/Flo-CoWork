@@ -4,11 +4,10 @@
   </a>
   <div class="d-none d-md-block">
     <div class="d-flex align-items-center justify-content-between">
-      <%= link_to "Exemple", "/", class: "navbar-flo-item navbar-flo-link" %>
       <% if user_signed_in? %>
-        <%= link_to t(".sign_out", default: "Log out"), destroy_user_session_path, method: :delete , class: "navbar-flo-item navbar-flo-link"%>
+        <%= link_to t(".sign_out", default: "Se déconnecter"), destroy_user_session_path, method: :delete , class: "navbar-flo-item navbar-flo-link"%>
       <% else %>
-        <%= link_to t(".sign_in", default: "Login"), new_user_session_path , class: "navbar-flo-item navbar-flo-link"%>
+        <%= link_to t(".sign_in", default: "Se connecter"), new_user_session_path , class: "navbar-flo-item navbar-flo-link"%>
       <% end %>
     </div>
   </div>

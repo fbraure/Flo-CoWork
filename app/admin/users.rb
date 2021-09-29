@@ -1,6 +1,8 @@
 ActiveAdmin.register User do
 
-  permit_params :email, :encrypted_password, :password, :password_confirmation, :admin
+  permit_params :email, :encrypted_password, :password, :password_confirmation, :admin,
+    :name, :phone, :biography,
+    requests_attributes: [:id, :progress, :_destroy]
 
   member_action :login_as, :method => :get do
     user = User.find(params[:id])
@@ -13,6 +15,11 @@ ActiveAdmin.register User do
     selectable_column
     column :id
     column :email
+    column :name
+    column :phone
+    column "Biographie remplie" do |u|
+      u.biography.present?
+    end
     toggle_bool_column :admin
     column :created_at
     column :updated_at
@@ -23,23 +30,26 @@ ActiveAdmin.register User do
   end
   form do |f|
     tabs do
-      tab 'User' do
+      tab 'Freelancers' do
         f.inputs do
           f.input :email
           f.input :password
           f.input :password_confirmation
+          f.input :name
+          f.input :phone
+          f.input :biography, as: :ckeditor
           f.input :admin
           f.button :submit
         end
       end
-    end
-  end
-  show do
-    tabs do
-      tab "Utilisateur" do
-        attributes_table do
-          row :email
-          row :admin
+      tab 'Demandes' do
+        f.inputs do
+          f.has_many :requests, allow_destroy: true do |r|
+            r.input :progress, collection:  enum_collection_translated_for(:request, :progresses)
+            r.input :created_at, as: :datepicker, input_html: { disabled: true }
+            r.input :active, input_html: { disabled: true }
+          end
+          f.submit
         end
       end
     end
