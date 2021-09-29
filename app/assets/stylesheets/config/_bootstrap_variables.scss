@@ -1,0 +1,22 @@
+$navbar-height: 100px;
+$footer-height: 100px;
+
+$blue-light: #BFD2D5;
+$yellow-smooth: #F2B960;
+$orange-smooth: #E65A2F;
+$dark-gray: #39404d;
+$light-gray: #f9f9f9;
+$dark-transparent: rgba(50, 50, 50, 0.8);
+$alert-info: $yellow-smooth;
+$alert-warning: $orange-smooth;
+$cookie: $blue-light;
+
+$spacer: 1rem !default;
+$spacers: (
+  0: 0,
+  1: ($spacer * .25),
+  2: ($spacer * .5),
+  3: $spacer,
+  4: ($spacer * 1.5),
+  5: ($spacer * 3)
+)

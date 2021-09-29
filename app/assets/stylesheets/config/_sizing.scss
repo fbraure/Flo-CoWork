@@ -1,0 +1,28 @@
+.page-min-height {
+  min-height: calc(100vh - #{$navbar-height} - #{$footer-height})
+}
+.navbar-height{
+  height: $navbar-height;
+}
+
+$sizes: 1px 4px 10px 12px 14px 16px 18px 20px 100px 125px 150px 200px 300px;
+@each $size in $sizes {
+  .height-#{$size} {
+    height: $size;
+  }
+  .width-#{$size} {
+    width: $size;
+  }
+  .max-height-#{$size} {
+    max-height: $size;
+  }
+  .max-width-#{$size} {
+    max-width: $size;
+  }
+  .min-height-#{$size} {
+    min-height: $size;
+  }
+  .min-width-#{$size} {
+    min-width: $size;
+  }
+}

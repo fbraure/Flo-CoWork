@@ -1,0 +1,10 @@
+.text-cookie {
+  color: $cookie;
+  &:hover{
+    text-decoration: none;
+    color: darken($cookie, 35%);
+  }
+}
+.border-cookie {
+  border-color: $cookie;
+}

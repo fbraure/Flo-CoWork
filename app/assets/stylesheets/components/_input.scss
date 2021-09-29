@@ -1,0 +1,42 @@
+.toggle-slide-input {
+  position: relative;
+  display: inline-block;
+  width: 2.75em;
+  min-width: 2.75em;
+  height: 1.55em;
+  border-radius: 1.55em;
+  vertical-align: middle;
+  margin: 0 0.5rem;
+  input {
+    display: none;
+  }
+  label {
+    display: block !important;
+    width: 100% !important;
+    height: 100%;
+    border-radius: 1.75em;
+    transition: background 0.125s;
+    background-color: $dark-gray;
+  }
+  label::after {
+    position: absolute;
+    content: '';
+    top: 0.1em;
+    left: 0.1em;
+    height: 1.35em;
+    background-color: $cookie;
+    border: 1px solid $dark-gray;
+    border-radius: 1.35em;
+    transition: all 0.2s;
+    background: $light-gray;
+    right: 1.3em;
+  }
+  input:checked + label {
+    background-color: $cookie;
+    &:after {
+      right: 0.1em;
+      left: 1.3em;
+      border: 1px solid $cookie;
+    }
+  }
+}

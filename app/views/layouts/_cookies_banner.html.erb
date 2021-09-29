@@ -1,0 +1,44 @@
+  <div id="cookiesBanner" class="cookies-banner py-3  d-none position-fixed w-100">
+  <div class="d-md-flex container align-items-center">
+    <p class="mb-md-0 flex-grow-1 text-white mr-md-3">
+      Nous utilisons des cookies, dont des cookies tiers (Google) pour vous offrir une expérience utilisateur de qualité ainsi que pour suivre et analyser le trafic sur le site. En cliquant sur « Accepter », vous acceptez que nous utilisions ces cookies. Vous pouvez à tout moment modifier vos paramètres de cookies. Pour cela, nous vous invitons à consulter notre Politique de confidentialité en cliquant sur « Personnaliser »
+      <br><%= link_to "En savoir plus", legal_path, target: "_blank", class: "link-no-decoration text-cookie" %>
+    </p>
+    <div class="d-flex">
+      <div id="cookiesGlobalConsent" class="btn btn-cookie font-size-12px me-3">Accepter</div>
+      <div class="btn btn-cookie font-size-12px" data-bs-toggle="modal" data-bs-target="#cookiesModal">Personnaliser</div>
+    </div>
+  </div>
+</div>
+<div class="modal fade font-size-14px font-montserrat" id="cookiesModal" tabindex="-1" role="dialog" aria-labelledby="cookiesModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered max-width-650px" role="document">
+    <div class="modal-content p-3 ">
+      <div class="modal-header border-0 p-0">
+        <%= image_tag "logo.png", width: 60 %>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body px-md-6">
+        <p class="font-weight-bold title-small">Votre Accord sur l'utilisation des cookies</p>
+        <p>Vous êtes libre d'activer et de désactiver à tout moment les familles de cookies suivantes :</p>
+        <p class="font-weight-bold">Cookies strictement nécessaires</p>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <p class="flex-grow-1 mb-0">Ils sont indispensables au bon fonctionnement du site.</p>
+          <%= image_tag "check.svg", width: 25 %>
+        </div>
+        <p class="font-weight-bold">Cookies Statistiques</p>
+        <div class="d-flex align-items-center mb-2">
+          <p class="flex-grow-1 mb-0">Ils nous permettent d'établir des statistiques anonymes via Google Analytics</p>
+          <div class="min-width-60px">
+            <div class="toggle-slide-input">
+              <input type="checkbox" name="google_analytics_consent" id="google_analytics_consent" data-analytics="<%= ENV['GOOGLE_ANALYTICS_KEY'] %>">
+              <label for="google_analytics_consent"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <div type="button" id="cookiesConfigBtn" class="btn btn-cookie" data-bs-dismiss="modal">Je valide</div>
+      </div>
+    </div>
+  </div>
+</div>
