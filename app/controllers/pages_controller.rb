@@ -2,6 +2,8 @@
     skip_before_action :authenticate_user!, only: [:home, :legal]
 
     def home
+      @accepted_users = User.not_admin.accepteds
+      @not_accepted_users = User.not_admin.not_accepteds
     end
 
     def legal

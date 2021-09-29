@@ -14,18 +14,20 @@ ActiveAdmin.register User do
   index do
     selectable_column
     column :id
-    column :email
     column :name
+    column :login_as do |user|
+      link_to user.email, login_as_admin_user_path(user), :target => '_blank'
+    end
+    column :progress do |user|
+      enum_translated_for(:request, :progresses, user.active_request&.progress) if user.active_request.present?
+    end
     column :phone
-    column "Biographie remplie" do |u|
-      u.biography.present?
+    column :biography do |user|
+      user.biography.present?
     end
     toggle_bool_column :admin
     column :created_at
     column :updated_at
-    column :login_as do |user|
-      link_to user.email, login_as_admin_user_path(user), :target => '_blank'
-    end
     actions
   end
   form do |f|

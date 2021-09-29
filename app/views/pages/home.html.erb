@@ -1,5 +1,8 @@
 <%= content_for :meta_title %>
 <div class="container page-min-height">
-  <h1>Pages#Home</h1>
-  <p>Find me in app/views/pages/home.html.erb</p>
+  <h2 class="my-3 text-center">Les Freelances </h2>
+  <div class="d-flex justify-content-between">
+    <%= render 'users/list_cards', users: @accepted_users, title: "Dans le CoWork", partial: "accepted_card", add_class: "col-md-5" %>
+    <%= render 'users/list_cards', users: @not_accepted_users, title: "En liste d'attente", partial: "not_accepted_card", add_class: "col-md-6"%>
+  </div>
 </div>
