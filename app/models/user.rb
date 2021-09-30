@@ -20,21 +20,29 @@ class User < ApplicationRecord
   validates :phone, format: { with: /\A\d{10}\z/, message: "10 chiffres sans espace" }
   validates :biography,  length: { minimum: MIN_BIOGRAPHY_LENGTH , maximum: MAX_BIOGRAPHY_LENGTH }
 
-  after_save :set_confirmed_request, if: [:saved_change_to_confirmed_at?, :confirmed_at?]
+  after_update :create_confirmed_request, if: [:saved_change_to_confirmed_at?, :confirmed_at?]
 
   def active_request
     requests.actives.first
   end
 
   def ask_for_reconfimation
-    p "Reconfirmation for #{self.name}"
-    # self.send_reconfirmation_mail
+    self.create_unconfirmed_request
+    self.send_confirmation_instructions
   end
 
   private
 
-  def set_confirmed_request
+  def create_unconfirmed_request
+    self.requests.create(progress: :unconfirmed)
+  end
+
+  def create_confirmed_request
     self.requests.create(progress: :confirmed)
+  end
+
+  def create_accepted_request
+    self.requests.create(progress: :accepted)
   end
 
 end

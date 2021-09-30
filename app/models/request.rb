@@ -12,6 +12,15 @@ class Request < ApplicationRecord
   scope :actives, -> { where( active: true ) }
   scope :order_by_created_at_desc, -> { order(created_at: :desc) }
 
+  # TODO A refaire avec AASM
+  def accept!
+    self.user.create_accepted_request
+  end
+
+  def self.stats
+    actives.order(:progress).pluck(:progress).tally
+  end
+
   private
 
   def set_lastest_step_active
