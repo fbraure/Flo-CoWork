@@ -26,7 +26,7 @@ class User < ApplicationRecord
   end
 
   def three_mont_unconfirmation
-
+    # self.send_reconfirmation_mail
   end
 
   private

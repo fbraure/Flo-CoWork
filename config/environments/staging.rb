@@ -3,9 +3,9 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV['DOMAIN'] }
   config.action_mailer.raise_delivery_errors = false
-  # Settings specified here will take precedence over those in config/application.rb.
   config.action_mailer.delivery_method     = :postmark
   config.action_mailer.postmark_settings   = { api_token: ENV['POSTMARK_API_TOKEN'] }
+  config.action_mailer.perform_caching = false
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -65,14 +65,6 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "drive_a2pconcept_production"
-
-  config.action_mailer.perform_caching = false
-
-
-  config.action_mailer.delivery_method     = :postmark
-  config.action_mailer.postmark_settings   = { api_token: ENV['POSTMARK_API_TOKEN'] }
-  config.action_mailer.default_url_options = { host: ENV['DOMAIN'] }
-  config.action_mailer.raise_delivery_errors = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
