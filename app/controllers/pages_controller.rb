@@ -3,7 +3,7 @@
 
     def home
       @accepted_users = User.not_admin.accepteds
-      @not_accepted_users = User.not_admin.not_accepteds
+      @not_accepted_users = User.not_admin.not_accepteds.order_by_created_at_desc
     end
 
     def legal

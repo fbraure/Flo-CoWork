@@ -9,12 +9,9 @@ class User < ApplicationRecord
 
   has_many :requests, dependent: :destroy
 
-  # TODO after_create first step
-  # confirmation second step
-  #   then...
-
   scope :not_admin, -> { where( admin: false ) }
   scope :accepteds, -> { includes(:requests).where( requests: { active: true, progress: :accepted } ) }
+  scope :confirmeds, -> { includes(:requests).where( requests: { active: true, progress: :confirmed } ) }
   scope :not_accepteds, -> { where.not(id: accepteds) }
 
   accepts_nested_attributes_for :requests, allow_destroy: true
@@ -27,6 +24,11 @@ class User < ApplicationRecord
 
   def active_request
     requests.actives.first
+  end
+
+  def ask_for_reconfimation
+    p "Reconfirmation for #{self.name}"
+    # self.send_reconfirmation_mail
   end
 
   private
