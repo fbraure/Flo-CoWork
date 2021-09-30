@@ -9,10 +9,6 @@ class User < ApplicationRecord
 
   has_many :requests, dependent: :destroy
 
-  # TODO after_create first step
-  # confirmation second step
-  #   then...
-
   scope :not_admin, -> { where( admin: false ) }
   scope :accepteds, -> { includes(:requests).where( requests: { active: true, progress: :accepted } ) }
   scope :not_accepteds, -> { where.not(id: accepteds) }
@@ -27,6 +23,10 @@ class User < ApplicationRecord
 
   def active_request
     requests.actives.first
+  end
+
+  def three_mont_unconfirmation
+
   end
 
   private
