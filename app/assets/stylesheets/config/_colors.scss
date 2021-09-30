@@ -14,3 +14,6 @@ $colors: ("blue-light", $blue-light), ("dark-gray", $dark-gray), ("light-gray", 
 .bg-linear-yellow{
   background-image: linear-gradient($yellow-heavy, $yellow-light);
 }
+.bg-linear-blue{
+  background-image: linear-gradient($blue-heavy, $blue-light);
+}

@@ -10,6 +10,7 @@ class Request < ApplicationRecord
   after_create :set_lastest_step_active
 
   scope :actives, -> { where( active: true ) }
+  scope :order_by_created_at_desc, -> { order(created_at: :desc) }
 
   private
 

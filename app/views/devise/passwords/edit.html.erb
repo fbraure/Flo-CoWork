@@ -1,12 +1,9 @@
 <% content_for(:form) do %>
-<h2>Change your password</h2>
-
+<h2>CHANGEMENT DE MOT DE PASSE</h2>
 <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
   <%= f.error_notification %>
-
   <%= f.input :reset_password_token, as: :hidden %>
   <%= f.full_error :reset_password_token %>
-
   <div class="form-inputs">
     <%= f.input :password,
                 label: "New password",
@@ -19,12 +16,10 @@
                 required: true,
                 input_html: { autocomplete: "new-password" } %>
   </div>
-
   <div class="form-actions my-3 d-flex justify-content-evenly">
-    <%= f.button :submit, "Change my password" %>
+    <%= f.button :submit, "Changer de mot de passe", class: "btn btn-primary"%>
     <%= render "devise/shared/links" %>
   </div>
 <% end %>
-
 <% end %>
 <%= render "devise/shared/form"%>

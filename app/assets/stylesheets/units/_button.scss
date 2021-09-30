@@ -3,7 +3,7 @@
 }
 .btn-primary{
   border: none;
-  background-image: linear-gradient($blue-heavy, $blue-light);
+  @extend .bg-linear-blue;
 }
 .btn.btn-rounded {
   border-radius: 20px;
