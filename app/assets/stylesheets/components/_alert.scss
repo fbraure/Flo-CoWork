@@ -3,10 +3,12 @@
   bottom: 16px;
   right: 16px;
   z-index: 1000;
+  color: black;
+  border: none
 }
 .alert-info {
-  background: $alert-info;
+  @extend .bg-linear-red;
 }
 .alert-warning {
-  background: $alert-warning;
+  @extend .bg-linear-yellow;
 }

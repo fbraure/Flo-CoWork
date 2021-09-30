@@ -1,6 +1,5 @@
 <% content_for(:form) do %>
-<h2>Forgot your password?</h2>
-
+<h2>MOT DE PASSE OUBLIE ?</h2>
 <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
   <%= f.error_notification %>
 
@@ -10,12 +9,10 @@
                 autofocus: true,
                 input_html: { autocomplete: "email" } %>
   </div>
-
   <div class="form-actions my-3 d-flex justify-content-evenly">
-    <%= f.button :submit, "Send me reset password instructions" %>
+    <%= f.button :submit, "Envoyer les instructions", class: "btn btn-primary" %>
     <%= render "devise/shared/links" %>
   </div>
 <% end %>
-
 <% end %>
 <%= render "devise/shared/form"%>

@@ -1,0 +1,7 @@
+<div class="d-flex justify-content-between align-items-center">
+  <div class="col-3 text-right"><%= user.name %></div>
+  <div class="col-3 text-right"><%= user.email %></div>
+  <div class="col-3 text-right"><%= enum_translated_for(:request, :progresses, user.active_request.progress) if user.active_request.present? %></div>
+  <div class="col-3 text-right"><%= user.active_request.created_at.strftime("%d/%m/%Y") if user.active_request.present? %></div>
+  <div></div>
+</div>

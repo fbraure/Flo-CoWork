@@ -13,14 +13,14 @@
     <meta property="og:image" content="<%= meta_image %>" />
     <meta property="og:description" content="<%= meta_description %>" />
     <meta property="og:site_name" content="<%= meta_title %>" />
-    <%= favicon_link_tag asset_path("favicon.svg")%>
+    <%= favicon_link_tag asset_path("logo.png")%>
 
     <%= yield(:robots) %>
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_pack_tag 'application', media: 'all' %> <!-- Uncomment if you import CSS in app/javascript/packs/application.js -->
-    
+
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
     <!-- 	prevent Chrome animation on loading -->
     <script type="text/javascript"> </script>

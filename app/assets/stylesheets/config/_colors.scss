@@ -1,5 +1,4 @@
-$colors: ("blue-light", $blue-light), ("yellow-smooth", $yellow-smooth), ("orange-smooth", $orange-smooth), ("dark-gray", $dark-gray), ("light-gray", $light-gray),
-  ("cookie", $cookie);
+$colors: ("blue-light", $blue-light), ("dark-gray", $dark-gray), ("light-gray", $light-gray), ("cookie", $cookie);
 
 @each $color in $colors {
   .bg-#{nth($color, 1)} {
@@ -8,4 +7,13 @@ $colors: ("blue-light", $blue-light), ("yellow-smooth", $yellow-smooth), ("orang
   .text-#{nth($color, 1)} {
     color: nth($color, 2);
   }
+}
+.bg-linear-red{
+  background-image: linear-gradient($red-heavy, $red-light);
+}
+.bg-linear-yellow{
+  background-image: linear-gradient($yellow-heavy, $yellow-light);
+}
+.bg-linear-blue{
+  background-image: linear-gradient($blue-heavy, $blue-light);
 }
