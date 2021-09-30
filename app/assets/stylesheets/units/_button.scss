@@ -1,6 +1,10 @@
 .btn {
   cursor: pointer;
 }
+.btn-primary{
+  border: none;
+  background-image: linear-gradient($blue-heavy, $blue-light);
+}
 .btn.btn-rounded {
   border-radius: 20px;
 }
