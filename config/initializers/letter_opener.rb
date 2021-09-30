@@ -1,3 +1,4 @@
+if Rails.env.development?
   LetterOpener.configure do |config|
     # To overrider the location for message storage.
     # Default value is `tmp/letter_opener`
@@ -7,3 +8,4 @@
     # config.message_template = :light
     # Default value is `:default` that renders styled message with showing useful metadata.
   end
+end
