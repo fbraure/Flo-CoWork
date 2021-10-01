@@ -21,4 +21,3 @@ class AddConfirmableToUsers < ActiveRecord::Migration[6.1]
     # remove_columns :users, :unconfirmed_email # Only if using reconfirmable
   end
 end
-end
