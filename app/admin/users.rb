@@ -1,8 +1,25 @@
 ActiveAdmin.register User do
+  actions :index, :show, :edit, :destroy, :login_as
 
   permit_params :email, :encrypted_password, :password, :password_confirmation, :admin,
     :name, :phone, :confirmed_at, :biography,
     requests_attributes: [:id, :progress, :active, :_destroy]
+
+  scope :all, :default => true
+  scope :unconfirmeds, association_method: :unconfirmeds
+  scope :accepteds, association_method: :accepteds
+  scope :confirmeds, association_method: :confirmeds
+  scope :pendings, association_method: :pendings
+
+  # action_item :unconfirm, only: :edit do
+  #   btn user.unconfirm
+  # end
+
+  member_action :unconfirm, :method => :get do
+    user = User.find(params[:id])
+    user.unconfirm
+    redirect_to admin_user_path(user)
+  end
 
   member_action :login_as, :method => :get do
     user = User.find(params[:id])
@@ -23,6 +40,12 @@ ActiveAdmin.register User do
     end
     column "Date Statut" do |user|
       user.active_request.created_at.strftime("%d/%m/%Y")if user.active_request.present?
+    end
+    column :unconfirm do |user|
+      link_to "Unconfirm", unconfirm_admin_user_path(user), :target => '_blank' if user.pending?
+    end
+    column "Position" do |user|
+      user.get_pending_position if user.pending?
     end
     column :phone
     column :biography do |user|

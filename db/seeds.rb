@@ -45,12 +45,12 @@ while User.accepteds.count < 10
                   # confirmed_at: DateTime.current,
                   admin: false)
   if user.save
-    # Je sors "unconfirmed de la liste => User.after_create"
-    progresses.reject{|p| p == :unconfirmed}.take(rand(1..nb_progesses-1)).each do |progress|
+    progresses.take(rand(1..nb_progesses)).each do |progress|
       if progress == :confirmed
         # Le call back va créer la request
         user.update(confirmed_at: DateTime.current)
-      else
+      # Je sors "unconfirmed de la liste => User.after_create"
+      elsif progress != :confirmed
         request = user.requests.create(progress: progress)
       end
     end

@@ -21,6 +21,10 @@ class Request < ApplicationRecord
     actives.order(:progress).pluck(:progress).tally
   end
 
+  def pending?
+    [:unconfirmed, :confirmed].include?(progress.to_sym)
+  end
+
   private
 
   def set_lastest_step_active

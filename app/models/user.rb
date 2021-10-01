@@ -10,11 +10,15 @@ class User < ApplicationRecord
   has_many :requests, dependent: :destroy
   has_one :active_request, -> { where( active: true ) }, class_name: 'Request'
 
+  # TODO rails migration date dedicated to store pending start
+  scope :order_by_created_at_desc, -> { order(created_at: :desc) }
+  scope :order_by_active_request_created_at_desc, -> {  includes(:active_request).order("active_request.created_at desc") }
   scope :not_admin, -> { where( admin: false ) }
+  scope :unconfirmeds, -> { includes(:requests).where( requests: { active: true, progress: :unconfirmed } ) }
   scope :accepteds, -> { includes(:requests).where( requests: { active: true, progress: :accepted } ) }
   scope :confirmeds, -> { includes(:requests).where( requests: { active: true, progress: :confirmed } ) }
-  scope :not_accepteds, -> { where.not(id: accepteds) }
-  scope :order_by_active_request_created_at_desc, -> {  includes(:active_request).order("active_request.created_at desc") }
+  # non accepted, et non expired
+  scope :pendings, -> { includes(:requests).where( requests: { active: true, progress: [:unconfirmed, :confirmed] } ) }
 
   accepts_nested_attributes_for :requests, allow_destroy: true
 
@@ -25,9 +29,23 @@ class User < ApplicationRecord
   after_create :create_unconfirmed_request
   after_update :create_confirmed_request, if: [:saved_change_to_confirmed_at?, :confirmed_at?]
 
-  def ask_for_reconfimation
-    self.create_unconfirmed_request
-    self.send_confirmation_instructions
+  def pending?
+    active_request&.pending?
+  end
+
+  def unconfirm
+    create_unconfirmed_request
+    unless @raw_confirmation_token
+      generate_confirmation_token!
+    end
+    UserMailer.with(user: self, token: @raw_confirmation_token).send_reconfirmation_instructions.deliver_now
+  end
+
+  def get_pending_position
+    (User.not_admin
+         .pendings
+         .order_by_created_at_desc
+         .map(&:id).index(self.id) || 0 ) + 1
   end
 
   private
