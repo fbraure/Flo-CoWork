@@ -1,8 +1,9 @@
   <div class="col-12 list-user-cards <%=add_class%>">
     <h3><%= title %></h3>
+    <%= render "users/#{partial}_header" %>
     <div class="overflow-y-scroll max-height-300px">
-      <% users.each do |user| %>
-        <%= render "users/#{partial}", user: user %>
+      <% users.each_with_index do |user, index| %>
+        <%= render "users/#{partial}", index: index,  user: user %>
       <% end %>
     </div>
   </div>

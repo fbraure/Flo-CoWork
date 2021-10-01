@@ -8,6 +8,14 @@
 .border-cookie {
   border-color: $cookie;
 }
+.border-end-blue {
+  border: none;
+  border-right: 1px solid $blue-heavy;
+}
+.border-bottom-blue {
+  border: none;
+  border-bottom: 1px solid $blue-heavy;
+}
 .overflow-x-scroll{
   overflow-x: scroll;
 }
