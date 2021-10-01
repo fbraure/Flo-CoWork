@@ -24,7 +24,7 @@
   </div>
 
   <div class="form-actions my-3 d-flex justify-content-evenly">
-    <%= f.button :submit, "Créer un compte", class: "btn btn-primary" %>
+    <%= invisible_recaptcha_tags text: "Créer un compte", class: "btn btn-primary"  %>
     <%= render "devise/shared/links" %>
   </div>
 <% end %>

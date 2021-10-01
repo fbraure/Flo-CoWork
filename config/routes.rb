@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   root to: 'pages#home'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :users, controllers: { confirmations: 'confirmations' }
+  devise_for :users, controllers: { confirmations: 'confirmations' , registrations: "registrations" }
 end

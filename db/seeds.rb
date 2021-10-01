@@ -31,7 +31,7 @@ admin = User.create(email: 'florent.braure@gmail.com',
 admin.requests.create(progress: :confirmed)
 
 # jusqu'à 10 accepté
-progresses = Request.progresses.values
+progresses = Request.progresses.keys.map(&:to_sym)
 nb_progesses = progresses.count
 while User.accepteds.count < 10
   name = Faker::Name.first_name
@@ -45,7 +45,8 @@ while User.accepteds.count < 10
                   # confirmed_at: DateTime.current,
                   admin: false)
   if user.save
-    progresses.take(rand(1..nb_progesses)).each do |progress|
+    # Je sors "unconfirmed de la liste => User.after_create"
+    progresses.reject{|p| p == :unconfirmed}.take(rand(1..nb_progesses-1)).each do |progress|
       if progress == :confirmed
         # Le call back va créer la request
         user.update(confirmed_at: DateTime.current)

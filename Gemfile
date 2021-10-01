@@ -9,7 +9,8 @@
   gem 'rails', '6.1.4.1'
   gem 'redis'
   gem "execjs", '~> 2.7.0'
-  gem 'cloudinary'
+  gem 'cloudinary', '~> 1.20.0'
+  gem "recaptcha"
   gem 'postmark-rails'
   gem 'activeadmin'
   gem 'activeadmin_addons'
