@@ -3,9 +3,9 @@ ActionMailer::Base.perform_deliveries = false
 
 p "CLEANING DATA"
 # User.where.not(email: 'florent.braure@gmail.com').map(&:destroy) unless Rails.env.production? || Rails.env.staging?
-User.all.map(&:destroy) unless Rails.env.production? || Rails.env.staging?
-[Page].each { |model| model.destroy_all} unless Rails.env.production? || Rails.env.staging?
-p "START SEEDING"
+User.all.map(&:destroy) unless Rails.env.production?
+[Page].each { |model| model.destroy_all} unless Rails.env.production?
+p "START SEEDING #{Rails.env.upcase}"
 
 admin = User.create(email: 'florent.braure@gmail.com',
                     password: 'macpass',
