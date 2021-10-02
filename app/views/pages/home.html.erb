@@ -2,8 +2,19 @@
 <div class="container page-min-height">
   <h2 class="my-3 text-center">Les Freelances </h2>
   <div class="row container mx-0">
-    <%= render 'users/list_cards', users: @accepted_users, title: "Dans le CoWork", partial: "accepted_card", add_class: "col-md-3 font-size-14px" %>
-    <%= render 'users/list_cards', users: @pending_users, title: "En liste d'attente", partial: "pending_card", add_class: "offset-md-1 col-md-8 font-size-12px"%>
+    <div class="col-12 col-md-3">
+      <%= render 'users/list_cards', users: @accepted_users, title: "Dans le CoWork (#{@accepted_users.count})", partial: "accepted_card", add_class: "font-size-14px" %>
+    </div>
+    <div class="col-12 offset-md-1 col-md-8">
+      <%= render 'users/list_cards', users: @pending_users,
+                                     title: "En liste d'attente (#{@pending_users.count})",
+                                     partial: "pending_card",
+                                     add_class: "font-size-12px"%>
+      <%= render 'users/list_cards', users: @expired_users,
+                                     title: "Non renouvelés (#{@expired_users.count})",
+                                     partial: "pending_card",
+                                     add_class: "font-size-12px"%>
+    </div>
   </div>
 </div>
 <%= render 'pages/home/acceptation_form', user: @user %>

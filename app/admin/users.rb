@@ -9,6 +9,7 @@ ActiveAdmin.register User do
   scope :unconfirmeds, association_method: :unconfirmeds
   scope :accepteds, association_method: :accepteds
   scope :confirmeds, association_method: :confirmeds
+  scope :expireds, association_method: :confirmeds
   scope :pendings, association_method: :pendings
 
   # action_item :unconfirm, only: :edit do
@@ -45,7 +46,7 @@ ActiveAdmin.register User do
       enum_translated_for(:request, :progresses, user.active_request&.progress) if user.active_request.present?
     end
     column "Date Statut" do |user|
-      user.active_request.created_at.strftime("%d/%m/%Y")if user.active_request.present?
+      user.decorate.active_created_at_txt
     end
     column :unconfirm do |user|
       link_to "Unconfirm", unconfirm_admin_user_path(user), method: :post, target: '_blank' if user.pending?
@@ -55,7 +56,7 @@ ActiveAdmin.register User do
     end
     toggle_bool_column :contract_accepted
     column :contract_last_date do |user|
-      user.contract_last_date&.strftime("%d/%m/%Y")
+      user.decorate.contract_date_txt
     end
     column :unaccept do |user|
       link_to "Unaccept", unaccept_admin_user_path(user), method: :post, :target => '_blank' if user.accepted? && user.contract_accepted?

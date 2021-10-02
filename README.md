@@ -17,4 +17,4 @@ Rails app generated with Florent BRAURE's template.
 3. Email must be validated with Devise::Confirmable
 4. Heroku scheduler ask for the re validation every 3 months. Unless status is expired
 5. User.XXX.accept! and User.XXX.active_request.accept! will accept a request (create e new one with status: accepted)
-6. User.stats display the requests stats
+6. Request.stats display the requests stats

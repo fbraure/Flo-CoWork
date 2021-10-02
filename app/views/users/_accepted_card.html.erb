@@ -1,4 +1,7 @@
-<div class="d-flex justify-content-center">
+<div id="in-<%=user.id%>" class="d-flex justify-content-center">
   <div class="col-3"><%= user.name %></div>
-  <div class="col-9"><%= user.contract_date_txt %></div>
+  <div class="col-8"><%= user.contract_date_txt %></div>
+  <%= link_to nil do %>
+    <%= image_tag 'delete.svg', width: 20, height: 20 %>
+  <% end %>
 </div>

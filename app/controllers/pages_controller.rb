@@ -3,10 +3,11 @@
 
     def home
       @user = current_user
+      users = User.not_admin.order_by_created_at_asc
       @accepted_users = User.not_admin.accepteds
-      @pending_users = User.not_admin
-                           .pendings
-                           .order_by_created_at_asc
+      @pending_users = users.pendings
+      @expired_users = users.expireds
+
     end
 
     def legal

@@ -17,6 +17,7 @@ class User < ApplicationRecord
   scope :unconfirmeds, -> { includes(:requests).where( requests: { active: true, progress: :unconfirmed } ) }
   scope :accepteds, -> { includes(:requests).where( requests: { active: true, progress: :accepted } ) }
   scope :confirmeds, -> { includes(:requests).where( requests: { active: true, progress: :confirmed } ) }
+  scope :expireds, -> { includes(:requests).where( requests: { active: true, progress: :expired } ) }
   # non accepted, et non expired
   scope :pendings, -> { includes(:requests).where( requests: { active: true, progress: [:unconfirmed, :confirmed] } ) }
 
@@ -32,6 +33,7 @@ class User < ApplicationRecord
 
   def pending? = !admin? && active_request&.pending?
   def accepted? = !admin? && active_request&.accepted?
+  def expired? = !admin? && active_request&.expired?
   def accept! = active_request&.accepted!
 
   # Le status passe en expired et on utlise la confirmation de mail pour revenir à confirmed

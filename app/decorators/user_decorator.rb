@@ -6,7 +6,7 @@ class UserDecorator < ApplicationDecorator
   end
 
   def active_created_at_txt
-    active_request&.created_at&.strftime("%d/%m/%Y - %Hh:%Mmin:%Ss")
+    active_request&.created_at&.strftime("%d/%m/%Y - %Hh:%M:%S")
   end
 
   def contract_date_txt
