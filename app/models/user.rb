@@ -22,7 +22,7 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :requests, allow_destroy: true
 
-  validates :name, presence: true, , uniqueness: true
+  validates :name, presence: true, uniqueness: true
   validates :phone, format: { with: /\A\d{10}\z/, message: "10 chiffres sans espace" }
   validates :biography, length: { minimum: MIN_BIOGRAPHY_LENGTH , maximum: MAX_BIOGRAPHY_LENGTH }
 
@@ -32,17 +32,18 @@ class User < ApplicationRecord
 
   def pending? = !admin? && active_request&.pending?
   def accepted? = !admin? && active_request&.accepted?
-
   def accept! = active_request&.accepted!
 
+  # Le status passe en expired et on utlise la confirmation de mail pour revenir à confirmed
   def unconfirm
-    create_unconfirmed_request
+    create_expired_request
     unless @raw_confirmation_token
       generate_confirmation_token!
     end
     UserMailer.with(user: self, token: @raw_confirmation_token).reconfirmation_instructions.deliver_now
   end
 
+  # Le contrat passe en not_accepted, on préviens pas mail. Un pop-up à la connexion réactive.
   def unaccept
     self.update(contract_accepted: false)
     UserMailer.with(user: self).accept_cowork_contract.deliver_now
@@ -60,6 +61,7 @@ class User < ApplicationRecord
   def create_unconfirmed_request = self.requests.create(progress: :unconfirmed)
   def create_confirmed_request   = self.requests.create(progress: :confirmed)
   def create_accepted_request    = self.requests.create(progress: :accepted)
+  def create_expired_request    = self.requests.create(progress: :expired)
 
   def set_contract_last_date
     self.update(contract_last_date: DateTime.current)
