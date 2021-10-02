@@ -7,7 +7,7 @@ User.all.map(&:destroy) unless Rails.env.production?
 [Page].each { |model| model.destroy_all} unless Rails.env.production?
 p "START SEEDING #{Rails.env.upcase}"
 
-admin = User.create(email: 'florent.braure@gmail.com',
+admin = User.new(email: 'florent.braure@gmail.com',
                     password: 'macpass',
                     password_confirmation: 'macpass',
                     admin: true,
@@ -28,7 +28,12 @@ admin = User.create(email: 'florent.braure@gmail.com',
                                 J'ai, moi, j'ai refusé
                                 (Mourir d'amour enchaîné)
                                 Oh, Gabrielle")
-admin.requests.create(progress: :confirmed)
+if admin.save
+  admin.requests.create(progress: :confirmed)
+else
+  p user.errors.full_messages
+  return
+end
 
 # jusqu'à 10 accepté
 progresses = Request.progresses.keys.map(&:to_sym)

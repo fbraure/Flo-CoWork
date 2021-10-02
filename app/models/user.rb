@@ -22,7 +22,7 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :requests, allow_destroy: true
 
-  validates :name, presence: true
+  validates :name, presence: true, , uniqueness: true
   validates :phone, format: { with: /\A\d{10}\z/, message: "10 chiffres sans espace" }
   validates :biography, length: { minimum: MIN_BIOGRAPHY_LENGTH , maximum: MAX_BIOGRAPHY_LENGTH }
 
@@ -32,6 +32,8 @@ class User < ApplicationRecord
 
   def pending? = !admin? && active_request&.pending?
   def accepted? = !admin? && active_request&.accepted?
+
+  def accept! = active_request&.accepted!
 
   def unconfirm
     create_unconfirmed_request
