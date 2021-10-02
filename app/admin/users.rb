@@ -2,7 +2,7 @@ ActiveAdmin.register User do
   actions :index, :show, :edit, :destroy, :login_as
 
   permit_params :email, :encrypted_password, :password, :password_confirmation, :admin,
-    :name, :phone, :confirmed_at, :biography,
+    :name, :phone, :confirmed_at, :biography, :contract_accepted, :contract_last_date,
     requests_attributes: [:id, :progress, :active, :_destroy]
 
   scope :all, :default => true
@@ -15,10 +15,16 @@ ActiveAdmin.register User do
   #   btn user.unconfirm
   # end
 
-  member_action :unconfirm, :method => :get do
+  member_action :unconfirm, :method => :post do
     user = User.find(params[:id])
     user.unconfirm
-    redirect_to admin_user_path(user)
+    redirect_to admin_users_path
+  end
+
+  member_action :unaccept, :method => :post do
+    user = User.find(params[:id])
+    user.unaccept
+    redirect_to admin_users_path
   end
 
   member_action :login_as, :method => :get do
@@ -33,7 +39,7 @@ ActiveAdmin.register User do
     column :id
     column :name
     column :login_as do |user|
-      link_to user.email, login_as_admin_user_path(user), :target => '_blank'
+      link_to user.email, login_as_admin_user_path(user), target: '_blank'
     end
     column "Statut Actif" do |user|
       enum_translated_for(:request, :progresses, user.active_request&.progress) if user.active_request.present?
@@ -42,10 +48,17 @@ ActiveAdmin.register User do
       user.active_request.created_at.strftime("%d/%m/%Y")if user.active_request.present?
     end
     column :unconfirm do |user|
-      link_to "Unconfirm", unconfirm_admin_user_path(user), :target => '_blank' if user.pending?
+      link_to "Unconfirm", unconfirm_admin_user_path(user), method: :post, target: '_blank' if user.pending?
     end
     column "Position" do |user|
       user.get_pending_position if user.pending?
+    end
+    toggle_bool_column :contract_accepted
+    column :contract_last_date do |user|
+      user.contract_last_date&.strftime("%d/%m/%Y")
+    end
+    column :unaccept do |user|
+      link_to "Unaccept", unaccept_admin_user_path(user), method: :post, :target => '_blank' if user.accepted? && user.contract_accepted?
     end
     column :phone
     column :biography do |user|
@@ -66,6 +79,8 @@ ActiveAdmin.register User do
           f.input :name
           f.input :phone
           f.input :confirmed_at, as: :datepicker
+          f.input :contract_accepted
+          f.input :contract_last_date, as: :datepicker
           f.input :biography, as: :ckeditor
           f.input :admin
           f.button :submit
@@ -73,7 +88,7 @@ ActiveAdmin.register User do
       end
       tab 'Demandes' do
         f.inputs do
-          f.has_many :requests, for: [:requests, f.object.requests.order_by_created_at_desc], allow_destroy: true do |r|
+          f.has_many :requests, for: [:requests, f.object.requests.order_by_created_at_asc], allow_destroy: true do |r|
             r.input :progress, collection:  enum_collection_translated_for(:request, :progresses)
             r.input :created_at, as: :datepicker, input_html: { disabled: true }
             r.input :active

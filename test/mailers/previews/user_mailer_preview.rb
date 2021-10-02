@@ -4,9 +4,14 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.with(user: user).welcome
   end
 
-  def send_reconfirmation_instructions
+  def reconfirmation_instructions
     user = User.first
     token = SecureRandom.hex(10)
-    UserMailer.with(user: user, token: token).send_reconfirmation_instructions(user, token)
+    UserMailer.with(user: user, token: token).reconfirmation_instructions
+  end
+
+  def accept_cowork_contract
+    user = User.first
+    UserMailer.with(user: user).accept_cowork_contract
   end
 end

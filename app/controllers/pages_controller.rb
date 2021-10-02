@@ -2,10 +2,11 @@
     skip_before_action :authenticate_user!, only: [:legal]
 
     def home
+      @user = current_user
       @accepted_users = User.not_admin.accepteds
       @pending_users = User.not_admin
                            .pendings
-                           .order_by_created_at_desc
+                           .order_by_created_at_asc
     end
 
     def legal

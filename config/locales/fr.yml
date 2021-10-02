@@ -19,10 +19,12 @@ fr:
         user: "Freelance"
         user: "Freelance"
       user:
-        name: "Nom"
-        email: "Email"
-        phone: "Téléphone"
         biography: "Biographie"
+        contract_accepted: "Contract signé"
+        contract_last_date: "Date du contrat"
+        email: "Email"
+        name: "Nom"
+        phone: "Téléphone"
         requests: "Demandes"
   true: "Oui"
   false: "Non"
@@ -235,6 +237,7 @@ fr:
     am: am
     formats:
       default: "%d %B %Y %Hh %Mmin %Ss"
+      extralong: "%d/%m/%Y - %Hh:%Mmin:%Ss"
       long: "%d/%m/%Y %H:%M"
       short: "%d %b %Hh%M"
       hour_details: "%Hh%M"

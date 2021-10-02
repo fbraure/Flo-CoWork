@@ -11,9 +11,9 @@ class User < ApplicationRecord
   has_one :active_request, -> { where( active: true ) }, class_name: 'Request'
 
   # TODO rails migration date dedicated to store pending start
-  scope :order_by_created_at_desc, -> { order(created_at: :desc) }
-  scope :order_by_active_request_created_at_desc, -> {  includes(:active_request).order("active_request.created_at desc") }
-  scope :not_admin, -> { where( admin: false ) }
+  scope :order_by_created_at_asc, -> { order(created_at: :asc) }
+  scope :order_by_active_request_created_at_asc, -> {  includes(:active_request).order("active_request.created_at asc") }
+  scope :not_admin, -> { where( admin: [nil, false] ) }
   scope :unconfirmeds, -> { includes(:requests).where( requests: { active: true, progress: :unconfirmed } ) }
   scope :accepteds, -> { includes(:requests).where( requests: { active: true, progress: :accepted } ) }
   scope :confirmeds, -> { includes(:requests).where( requests: { active: true, progress: :confirmed } ) }
@@ -28,38 +28,39 @@ class User < ApplicationRecord
 
   after_create :create_unconfirmed_request
   after_update :create_confirmed_request, if: [:saved_change_to_confirmed_at?, :confirmed_at?]
+  after_update :set_contract_last_date, if: :saved_change_to_contract_accepted?
 
-  def pending?
-    active_request&.pending?
-  end
+  def pending? = !admin? && active_request&.pending?
+  def accepted? = !admin? && active_request&.accepted?
 
   def unconfirm
     create_unconfirmed_request
     unless @raw_confirmation_token
       generate_confirmation_token!
     end
-    UserMailer.with(user: self, token: @raw_confirmation_token).send_reconfirmation_instructions.deliver_now
+    UserMailer.with(user: self, token: @raw_confirmation_token).reconfirmation_instructions.deliver_now
+  end
+
+  def unaccept
+    self.update(contract_accepted: false)
+    UserMailer.with(user: self).accept_cowork_contract.deliver_now
   end
 
   def get_pending_position
     (User.not_admin
          .pendings
-         .order_by_created_at_desc
+         .order_by_created_at_asc
          .map(&:id).index(self.id) || 0 ) + 1
   end
 
   private
 
-  def create_unconfirmed_request
-    self.requests.create(progress: :unconfirmed)
-  end
+  def create_unconfirmed_request = self.requests.create(progress: :unconfirmed)
+  def create_confirmed_request   = self.requests.create(progress: :confirmed)
+  def create_accepted_request    = self.requests.create(progress: :accepted)
 
-  def create_confirmed_request
-    self.requests.create(progress: :confirmed)
-  end
-
-  def create_accepted_request
-    self.requests.create(progress: :accepted)
+  def set_contract_last_date
+    self.update(contract_last_date: DateTime.current)
   end
 
 end

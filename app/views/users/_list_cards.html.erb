@@ -3,7 +3,7 @@
     <%= render "users/#{partial}_header" %>
     <div class="overflow-y-scroll max-height-300px">
       <% users.each_with_index do |user, index| %>
-        <%= render "users/#{partial}", index: index,  user: user %>
+        <%= render "users/#{partial}", index: index,  user: user.decorate %>
       <% end %>
     </div>
   </div>
