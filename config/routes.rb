@@ -6,4 +6,7 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users, controllers: { confirmations: 'confirmations' , registrations: "registrations" }
+  resources :users, only: [] do
+    resources :requests, only: [:create]
+  end
 end

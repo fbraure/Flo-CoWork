@@ -1,18 +1,12 @@
-<div class="modal <%="myOpenModal" if (@user.contract_accepted == false && @user.accepted?) || @user.expired? %>"" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content bg-linear-blue">
-      <%= simple_form_for @user, url: user_registration_path, html: { method: :patch }  do |f| %>
+<% if (@user.contract_accepted == false && @user.accepted?) || @user.expired? %>
+  <div class="modal myOpenModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content bg-linear-blue">
         <div class="modal-header">
           <h5 class="modal-title w-100 text-center">Salut <%= @user.name %></h5>
         </div>
-        <div class="modal-body">
-          <%= render "pages/home/user_#{@user.active_request.progress}", f: f %>
-         </div>
-        <div class="modal-footer d-flex justify-content-around">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Annuler</button>
-          <%= f.button :submit, value: "Valider", class: "btn btn-primary" %>
-        </div>
-      <% end %>
+        <%= render "pages/home/user_#{@user.active_request.progress}", user: @user %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
