@@ -6,8 +6,7 @@ class UserMailerPreview < ActionMailer::Preview
 
   def reconfirmation_instructions
     user = User.first
-    token = SecureRandom.hex(10)
-    UserMailer.with(user: user, token: token).reconfirmation_instructions
+    UserMailer.with(user: user).reconfirmation_instructions
   end
 
   def accept_cowork_contract

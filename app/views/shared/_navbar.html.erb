@@ -2,7 +2,12 @@
   <a href="/" class="navbar-flo-brand">
     <%= image_tag "logo.png" %>
   </a>
-  <h1 class="my-3 text-center">Bienvenue au CoWork </h1>
+  <div class="d-flex flex-column text-center">
+    <% if user_signed_in? %>
+      <h3 class="my-0">Bonjour <%= current_user.name %></h3>
+    <% end %></h3>
+    <h1 class="my-0">Bienvenue au CoWork </h1>
+  </div>
   <div class="d-none d-md-block">
     <div class="d-flex align-items-center justify-content-between">
       <% if user_signed_in? %>

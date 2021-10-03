@@ -4,8 +4,8 @@
 <div class="container page-min-height">
   <%= @page.content&.html_safe %>
    <div class="mt-3">
-    À tout moment, l’Utilisateur peut faire le choix d’exprimer et de modifier ses souhaits en matière de Cookies. <a href="<%= ENV["DOMAIN"] %>">agences-et-curieux-sabstenir.fr</a> pourra en outre faire appel aux services de prestataires externes pour l’aider à recueillir et traiter les informations décrites dans cette section.</p>
-            À tout moment, l’Utilisateur peut faire le choix d’exprimer et de modifier ses souhaits en matière de Cookies en cliquant sur le lien ci-dessous. <a href="<%= ENV["DOMAIN"] %>">agences-et-curieux-sabstenir.fr</a> pourra en outre faire appel aux services de prestataires externes pour l’aider à recueillir et traiter les informations décrites dans cette section.</p>
+    À tout moment, l’Utilisateur peut faire le choix d’exprimer et de modifier ses souhaits en matière de Cookies. <a href="<%= ENV["DOMAIN"] %>"> <%= ENV["DOMAIN"] %></a> pourra en outre faire appel aux services de prestataires externes pour l’aider à recueillir et traiter les informations décrites dans cette section.</p>
+            À tout moment, l’Utilisateur peut faire le choix d’exprimer et de modifier ses souhaits en matière de Cookies en cliquant sur le lien ci-dessous. <a href="<%= ENV["DOMAIN"] %>"><%= ENV["DOMAIN"] %></a> pourra en outre faire appel aux services de prestataires externes pour l’aider à recueillir et traiter les informations décrites dans cette section.</p>
     <div class="d-flex justify-content-center mb-4">
       <div class="btn btn-cookie font-size-16px py-2" data-bs-toggle="modal" data-bs-target="#cookiesModal">PERSONNALISER LES COOKIES</div>
     </div>

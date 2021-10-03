@@ -6,7 +6,6 @@ class UserMailer < ApplicationMailer
 
   def reconfirmation_instructions
     @user = params[:user]
-    @token = params[:token]
     mail(to: @user.email, subject: 'Renouvellement de motivation')
   end
 

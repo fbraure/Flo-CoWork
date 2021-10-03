@@ -32,20 +32,22 @@ class User < ApplicationRecord
   after_update :set_contract_last_date, if: :saved_change_to_contract_accepted?
 
   def pending? = !admin? && active_request&.pending?
-  def accepted? = !admin? && active_request&.accepted?
-  def expired? = !admin? && active_request&.expired?
-  def accept! = active_request&.accepted!
+  def unconfirmed? = active_request&.unconfirmed?
+  def confirmed? = active_request&.confirmed?
+  def accepted? = active_request&.accepted?
+  def expired? = active_request&.expired?
+  def accept! = active_request&.accept!
 
-  # Le status passe en expired et on utlise la confirmation de mail pour revenir à confirmed
+  # Le status passe en expired, on prévient pas mail. Un pop-up à la connexion réactive.
   def unconfirm
     create_expired_request
     unless @raw_confirmation_token
       generate_confirmation_token!
     end
-    UserMailer.with(user: self, token: @raw_confirmation_token).reconfirmation_instructions.deliver_now
+    UserMailer.with(user: self).reconfirmation_instructions.deliver_now
   end
 
-  # Le contrat passe en not_accepted, on préviens pas mail. Un pop-up à la connexion réactive.
+  # Le contrat passe en not_accepted, on prévient pas mail. Un pop-up à la connexion réactive.
   def unaccept
     self.update(contract_accepted: false)
     UserMailer.with(user: self).accept_cowork_contract.deliver_now
@@ -58,12 +60,12 @@ class User < ApplicationRecord
          .map(&:id).index(self.id) || 0 ) + 1
   end
 
-  private
-
   def create_unconfirmed_request = self.requests.create(progress: :unconfirmed)
   def create_confirmed_request   = self.requests.create(progress: :confirmed)
   def create_accepted_request    = self.requests.create(progress: :accepted)
-  def create_expired_request    = self.requests.create(progress: :expired)
+  def create_expired_request     = self.requests.create(progress: :expired)
+
+  private
 
   def set_contract_last_date
     self.update(contract_last_date: DateTime.current)
