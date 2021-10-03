@@ -22,8 +22,7 @@
                 hint: ("De #{User::MIN_BIOGRAPHY_LENGTH} à #{User::MAX_BIOGRAPHY_LENGTH} caractères"),
                 required: true %>
   </div>
-
-  <div class="form-actions my-3 d-flex justify-content-evenly">
+  <div class="form-actions m-3 d-flex justify-content-evenly flex-wrap">
     <%= invisible_recaptcha_tags text: "Créer un compte", class: "btn btn-primary"  %>
     <%= render "devise/shared/links" %>
   </div>

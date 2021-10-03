@@ -33,7 +33,6 @@ class User < ApplicationRecord
 
   def pending? = !admin? && active_request&.pending?
   def unconfirmed? = active_request&.unconfirmed?
-  # def confirmed? = active_request&.confirmed?
   def accepted? = active_request&.accepted?
   def expired? = active_request&.expired?
   def accept! = active_request&.accept!
