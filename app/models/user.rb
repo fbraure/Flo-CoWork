@@ -20,6 +20,7 @@ class User < ApplicationRecord
   scope :expireds, -> { includes(:requests).where( requests: { active: true, progress: :expired } ) }
   # non accepted, et non expired
   scope :pendings, -> { includes(:requests).where( requests: { active: true, progress: [:unconfirmed, :confirmed] } ) }
+  scope :contract_accepteds, -> { where( contract_accepted: true ) }
 
   accepts_nested_attributes_for :requests, allow_destroy: true
 
@@ -35,10 +36,9 @@ class User < ApplicationRecord
   def unconfirmed? = active_request&.unconfirmed?
   def accepted? = active_request&.accepted?
   def expired? = active_request&.expired?
-  def accept! = active_request&.accept!
 
   # Le status passe en expired, on prévient pas mail. Un pop-up à la connexion réactive.
-  def unconfirm
+  def unconfirm!
     create_expired_request
     unless @raw_confirmation_token
       generate_confirmation_token!
@@ -46,10 +46,17 @@ class User < ApplicationRecord
     UserMailer.with(user: self).reconfirmation_instructions.deliver_now
   end
 
-  # Le contrat passe en not_accepted, on prévient pas mail. Un pop-up à la connexion réactive.
-  def unaccept
+  # Le statu passe en accept, le contrat passe en not_accepted on prévient pas mail. Un pop-up à la connexion valide le contrat.
+  def accept!
+    active_request&.accept!
     self.update(contract_accepted: false)
     UserMailer.with(user: self).accept_cowork_contract.deliver_now
+  end
+
+  # Le contrat passe en not_accepted, on prévient pas mail. Un pop-up à la connexion valide le contrat.
+  def unaccept!
+    self.update(contract_accepted: false)
+    UserMailer.with(user: self).confirm_cowork_contract.deliver_now
   end
 
   def get_pending_position

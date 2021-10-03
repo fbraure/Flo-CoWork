@@ -18,13 +18,13 @@ ActiveAdmin.register User do
 
   member_action :unconfirm, :method => :post do
     user = User.find(params[:id])
-    user.unconfirm
+    user.unconfirm!
     redirect_to admin_users_path
   end
 
   member_action :unaccept, :method => :post do
     user = User.find(params[:id])
-    user.unaccept
+    user.unaccept!
     redirect_to admin_users_path
   end
 

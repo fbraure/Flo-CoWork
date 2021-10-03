@@ -13,4 +13,9 @@ class UserMailerPreview < ActionMailer::Preview
     user = User.first
     UserMailer.with(user: user).accept_cowork_contract
   end
+
+  def confirm_cowork_contract
+    user = User.first
+    UserMailer.with(user: user).confirm_cowork_contract
+  end
 end
