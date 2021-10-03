@@ -1,6 +1,6 @@
-<p>Bonjour <%= @user.email %> !</p>
+<p>Salut <%= @user.name %>,</p>
 <% if @user.pending? %>
   <p>Vous êtes à la position <%= @user.get_pending_position %> dans la file d'attente </p>
 <% end %>
 <p>Vous devez reconfirmer votre envie d'intégrer le cowork en cliquant sur le lien ci-dessous</p>
-<p><%= link_to 'Confirmer ma motivation', confirmation_url(@user, confirmation_token: @token) %></p>
+<p><%= link_to 'Confirmer ma motivation', root_url, target: "_blank"%></p>

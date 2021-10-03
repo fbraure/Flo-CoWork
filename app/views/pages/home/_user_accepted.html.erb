@@ -1,0 +1,10 @@
+<%= simple_form_for @user, url: user_registration_path, html: { method: :patch }  do |f| %>
+  <div class="modal-body">
+    <p>Pour pouvoir profiter du co work, tu dois accepter les conditions d'utilisation ci-dessous</p>
+    <%= f.input :contract_accepted, label: "J'accepte", class: "w-100 text-center", wrapper_html: { class: 'd-flex justify-content-center' }%>
+  </div>
+  <div class="modal-footer d-flex justify-content-around">
+    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Annuler</button>
+    <%= f.button :submit, value: "Valider", class: "btn btn-primary" %>
+  </div>
+<% end %>

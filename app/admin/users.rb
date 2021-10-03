@@ -49,7 +49,7 @@ ActiveAdmin.register User do
       user.decorate.active_created_at_txt
     end
     column :unconfirm do |user|
-      link_to "Unconfirm", unconfirm_admin_user_path(user), method: :post, target: '_blank' if user.pending?
+      link_to "Unconfirm", unconfirm_admin_user_path(user), method: :post, target: '_blank' if user.confirmed?
     end
     column "Position" do |user|
       user.get_pending_position if user.pending?

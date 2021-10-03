@@ -1,0 +1,7 @@
+<div class="modal-body">
+  <p>Pour pouvoir rester en file d'attente, tu dois confirmer ta motivation</p>
+</div>
+<div class="modal-footer d-flex justify-content-around">
+  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Annuler</button>
+  <%= link_to 'Confirmer', user_requests_path(@user, request: {progress: :confirmed}), method: :post, class: "btn btn-primary"  %>
+</div>

@@ -34,7 +34,7 @@ else
   p user.errors.full_messages
   return
 end
-
+return
 # jusqu'à 10 accepté
 progresses = Request.progresses.keys.map(&:to_sym)
 nb_progesses = progresses.count
