@@ -12,10 +12,6 @@ ActiveAdmin.register User do
   scope :expireds, association_method: :confirmeds
   scope :pendings, association_method: :pendings
 
-  # action_item :unconfirm, only: :edit do
-  #   btn user.unconfirm
-  # end
-
   member_action :unconfirm, :method => :post do
     user = User.find(params[:id])
     user.unconfirm!
