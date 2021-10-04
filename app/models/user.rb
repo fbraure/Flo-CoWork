@@ -18,8 +18,8 @@ class User < ApplicationRecord
   scope :accepteds, -> { includes(:requests).where( requests: { active: true, progress: :accepted } ) }
   scope :confirmeds, -> { includes(:requests).where( requests: { active: true, progress: :confirmed } ) }
   scope :expireds, -> { includes(:requests).where( requests: { active: true, progress: :expired } ) }
-  # non accepted, et non expired
   scope :pendings, -> { includes(:requests).where( requests: { active: true, progress: [:unconfirmed, :confirmed] } ) }
+  scope :pendings_or_expired, -> { includes(:requests).where( requests: { active: true, progress: [:unconfirmed, :confirmed, :expired] } ) }
   scope :contract_accepteds, -> { where( contract_accepted: true ) }
 
   accepts_nested_attributes_for :requests, allow_destroy: true
@@ -58,7 +58,7 @@ class User < ApplicationRecord
 
   def get_pending_position
     (User.not_admin
-         .pendings
+         .pendings_or_expired
          .order_by_created_at_asc
          .map(&:id).index(self.id) || 0 ) + 1
   end

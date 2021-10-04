@@ -1,5 +1,5 @@
 <div id="out-<%=user.id%>" class="d-flex justify-content-between align-items-center font-size-12px">
-  <div class="col-3 col-md-1 text-right border-end-blue"><%= index + 1%></div>
+  <div class="col-3 col-md-1 text-right border-end-blue"><%= user.get_pending_position %></div>
   <div class="col-4 col-md-2 text-right border-end-blue"><%= user.name %></div>
   <div class="col-5 col-md-3 text-right border-end-blue"><%= user.email %></div>
   <div class="d-none d-md-block col-md-3 text-right border-end-blue"><%= enum_translated_for(:request, :progresses, user.active_request.progress) if user.active_request.present? %></div>

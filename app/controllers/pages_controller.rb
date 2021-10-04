@@ -7,7 +7,6 @@
       @accepted_users = User.not_admin.accepteds.contract_accepteds
       @pending_users = users.pendings
       @expired_users = users.expireds
-
     end
 
     def legal
