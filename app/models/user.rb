@@ -39,11 +39,8 @@ class User < ApplicationRecord
 
   # Le status passe en expired, on prévient pas mail. Un pop-up à la connexion réactive.
   def unconfirm!
-    create_expired_request
-    unless @raw_confirmation_token
-      generate_confirmation_token!
-    end
     UserMailer.with(user: self).reconfirmation_instructions.deliver_now
+    create_expired_request
   end
 
   # Le statu passe en accept, le contrat passe en not_accepted on prévient pas mail. Un pop-up à la connexion valide le contrat.
