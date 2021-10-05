@@ -32,10 +32,9 @@ class User < ApplicationRecord
   after_update :create_confirmed_request, if: [:saved_change_to_confirmed_at?, :confirmed_at?]
   after_update :set_contract_last_date, if: :saved_change_to_contract_accepted?
 
+  delegate :unconfirmed?, :accepted?, :expired?, to: :active_request
+
   def pending? = !admin? && active_request&.pending?
-  def unconfirmed? = active_request&.unconfirmed?
-  def accepted? = active_request&.accepted?
-  def expired? = active_request&.expired?
 
   # Le status passe en expired, on prévient pas mail. Un pop-up à la connexion réactive.
   def unconfirm!
