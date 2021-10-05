@@ -2,7 +2,7 @@
     <h3><%= title %></h3>
     <%= render "users/#{partial}_header" %>
     <div class="overflow-y-scroll max-height-300px">
-      <% users.each do |user| %>
+      <% users.find_each do |user| %>
         <%= render "users/#{partial}", user: user.decorate %>
       <% end %>
     </div>
